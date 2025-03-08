@@ -22,8 +22,8 @@ import matplotlib.pyplot as plt
 train = ImageDataGenerator(rescale=1/255)
 test = ImageDataGenerator(rescale=1/255)
 
-train_dataset = train.flow_from_directory("C:\\Users\\arpan\\OneDrive\\Desktop\\tmpDeploy\\static\\ProjectFire\\Training and Validation", target_size=(150, 150), batch_size = 32, class_mode = 'binary')
-test_dataset = train.flow_from_directory("C:\\Users\\arpan\\OneDrive\\Desktop\\tmpDeploy\\static\\ProjectFire\\Testing", target_size=(150, 150), batch_size = 32, class_mode = 'binary')
+train_dataset = train.flow_from_directory("", target_size=(150, 150), batch_size = 32, class_mode = 'binary')
+test_dataset = train.flow_from_directory("https://github.com/DONCHAN70047/FireOrNotFireUPDATE/tree/main/static/ProjectFire/Testing", target_size=(150, 150), batch_size = 32, class_mode = 'binary')
 
 
 test_dataset.class_indices

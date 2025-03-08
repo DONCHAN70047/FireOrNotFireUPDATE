@@ -49,7 +49,7 @@ def predict():
 
         # Load and preprocess image
         #image_path
-        img = image.load_img('https://github.com/DONCHAN70047/FireOrNotFireUPDATE/blob/main/static/ProjectFire/Testing/fire/abc169.jpg', target_size=(150, 150))
+        img = image.load_img("https://github.com/DONCHAN70047/FireOrNotFireUPDATE/blob/main/static/ProjectFire/Testing/fire/abc169.jpg", target_size=(150, 150))
         img_array = image.img_to_array(img)
         img_array = np.expand_dims(img_array, axis=0)
         img_array = img_array / 255.0

@@ -1,0 +1,15 @@
+Flask==3.1.0
+gTTS==2.5.4
+gunicorn==21.2.0
+requests==2.31.0
+pygame==2.5.2
+tensorflow==2.15.0
+numpy==1.26.4
+opencv-python==4.9.0.80
+matplotlib==3.8.3
+Pillow==10.2.0
+Flask==3.1.0
+tensorflow==2.15.0
+numpy==1.26.4
+Werkzeug==3.0.1
+gunicorn==21.2.0

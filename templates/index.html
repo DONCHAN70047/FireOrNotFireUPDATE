@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fire Detection</title>
+</head>
+<body>
+    <h2>Live Camera Feed</h2>
+    <video id="video" autoplay playsinline width="640" height="480"></video>
+    <button onclick="startCamera()">Start Camera</button>
+    <button onclick="startCapturing()">Start Sending</button> 
+    <button onclick="stopCapturing()">Stop Sending</button> 
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <br>
+    <img id="capturedImage" alt="Captured Image">
+    <h1>Prediction Result:</h1>
+    <h1><p id="predictionResult">Waiting...</p></h1>
+
+    <script>
+        let videoStream;
+        let captureInterval;
+
+        function startCamera() {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then((stream) => {
+                    videoStream = stream;
+                    document.getElementById("video").srcObject = stream;
+                })
+                .catch((error) => {
+                    console.error("Error accessing camera:", error);
+                });
+        }
+
+        function startCapturing() {
+            if (!captureInterval) {
+                captureInterval = setInterval(captureImage, 2000); // Send image every 2 sec
+            }
+        }
+
+        function stopCapturing() {
+            clearInterval(captureInterval);
+            captureInterval = null;
+        }
+
+        function captureImage() {
+            const video = document.getElementById("video");
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const imageUrl = canvas.toDataURL("image/png");
+            document.getElementById("capturedImage").src = imageUrl;
+
+            fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: imageUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    document.getElementById("predictionResult").innerText = data.result;
+                } else {
+                    document.getElementById("predictionResult").innerText = "Error: Prediction failed";
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+</body>
+</html>
